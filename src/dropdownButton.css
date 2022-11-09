@@ -1,0 +1,19 @@
+.myControlClassName {
+    border-radius: 10px;
+    background-color: #dcdcdc;
+    font-family: "Oswald";
+}
+
+.myMenuClassName {
+    border-radius: 10px;
+    background-color: #dcdcdc;
+    font-family: "Oswald";
+}
+
+.myMenuClassName :hover {
+    background-color: #e8e8e8;
+}
+
+.myMenuClassName .is-selected {
+    background-color: #e8e8e8;
+}

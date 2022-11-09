@@ -1,0 +1,17 @@
+.myYaxis {
+    color: white;
+}
+
+.myXaxis {
+    color: white;
+}
+
+.bars {
+    shape-rendering: crispEdges;
+}
+
+.textBarPlot {
+    text-anchor: end;
+    fill: white;
+    font-family: 'Oswald';
+}
