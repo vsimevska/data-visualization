@@ -10,23 +10,20 @@ const height = 450;
 const margin = 40;
 const radius = Math.min(width, height) / 2 - margin;
 
-export function DonutChartMale({xAttribute}) {
-  const dataHeart = useData();
-  if (!dataHeart) {
+export function DonutChartMale({xAttribute, data}) {
+  if (!data) {
     return <pre>Loading...</pre>;
   }
 
-  d3.select("#donut_male")
-    .select("svg")
-    .remove();
+  d3.select("#donut_male").select("svg").remove();
   const xValue = (d) => d[xAttribute];
 
-  const data_mapped_value = dataPreparationMale(xAttribute);
-  const dataColumn = dataHeart.map(xValue);
+  const data_mapped_value = dataPreparationMale(xAttribute, data);
+  const dataColumn = data.map(xValue);
   var pie = d3
     .pie()
     .sort(null)
-    .value(function(d) {
+    .value(function (d) {
       return d.value;
     });
   const data_mapped = pie(data_mapped_value);
@@ -66,7 +63,7 @@ export function DonutChartMale({xAttribute}) {
     .enter()
     .append("path")
     .attr("d", arc)
-    .attr("fill", function(d) {
+    .attr("fill", function (d) {
       return color(d.data.key);
     })
     .attr("class", "donutChart")
@@ -90,7 +87,7 @@ export function DonutChartMale({xAttribute}) {
     .enter()
     .append("polyline")
     .attr("class", "donutChartPolyline")
-    .attr("points", function(d) {
+    .attr("points", function (d) {
       var posA = arc.centroid(d);
       var posB = outerArc.centroid(d);
       var posC = outerArc.centroid(d);
@@ -104,17 +101,17 @@ export function DonutChartMale({xAttribute}) {
     .data(data_mapped)
     .enter()
     .append("text")
-    .text(function(d) {
+    .text(function (d) {
       return d.data.key;
     })
     .attr("class", "donutChartLabel")
-    .attr("transform", function(d) {
+    .attr("transform", function (d) {
       var pos = outerArc.centroid(d);
       var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
       pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
       return "translate(" + pos + ")";
     })
-    .style("text-anchor", function(d) {
+    .style("text-anchor", function (d) {
       var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
       return midangle < Math.PI ? "start" : "end";
     });

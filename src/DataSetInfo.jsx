@@ -103,6 +103,50 @@ export function DataSetInfo({xAttribute}) {
           value1={["0 - Female", "1 - Male"]}
         />
       )}
+
+      {xAttribute === "Married" && (
+        <Legend
+          heading={"Married"}
+          value1={["0 - Single/Divorced", "1 - Married"]}
+        />
+      )}
+      {xAttribute === "BankCustomer" && (
+        <Legend
+          heading={"Bank Customer"}
+          value1={[
+            "0 - does not have a bank account",
+            " 1 - has a bank account",
+          ]}
+        />
+      )}
+      {xAttribute === "PriorDefault" && (
+        <Legend
+          heading={"Prior Default"}
+          value1={["0 - no prior default", " 1 - prior default"]}
+        />
+      )}
+      {xAttribute === "Employed" && (
+        <Legend
+          heading={"Employed"}
+          value1={["0 - not employed", " 1 - employed"]}
+        />
+      )}
+      {xAttribute === "DriversLicense" && (
+        <Legend
+          heading={"Drivers License"}
+          value1={["0 - no license", " 1 - has license"]}
+        />
+      )}
+      {xAttribute === "Approved" && (
+        <Legend
+          heading={"Approved"}
+          value1={["0 - not approved", " 1 - aprroved"]}
+        />
+      )}
+      {xAttribute === "Gender" && (
+        <Legend heading={"Gender"} value1={["0 - Female", " 1 - Male"]} />
+      )}
+      
     </Box>
   );
 }

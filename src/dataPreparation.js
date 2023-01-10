@@ -1,14 +1,13 @@
-import {useData} from "./useData";
+import {useData} from "./button-bar-plot/useData";
 import React from "react";
 
-export function dataPreparation(dataValue) {
-  const data = useData();
+export function dataPreparation(dataValue, data) {
   if (!data) {
     return <pre>Loading...</pre>;
   }
   const data_ready = {};
   const dataColumn = data.map(dataValue);
-  dataColumn.forEach(function(x) {
+  dataColumn.forEach(function (x) {
     data_ready[x] = (data_ready[x] || 0) + 1;
   });
   const data_mapped = Object.entries(data_ready).map(([key, value]) => ({

@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import {useData} from "./useData";
 import {Box} from "theme-ui";
-import {dataPreparation} from "./dataPreparation";
+import {dataPreparation} from "../dataPreparation";
 import React, {useState} from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -15,37 +15,20 @@ const height = 450;
 const margin = 40;
 const radius = Math.min(width, height) / 2 - margin;
 
-const attributes = [
-  {value: "sex", label: "sex"},
-  {value: "cp", label: "cp"},
-  {value: "fbs", label: "fbs"},
-  {value: "restecg", label: "restecg"},
-  {value: "exng", label: "exng"},
-  {value: "slp", label: "slp"},
-  {value: "caa", label: "caa"},
-  {value: "thall", label: "thall"},
-  {value: "output", label: "output"},
-];
-
-export function DonutChart() {
-  const initialXAttribute = "sex";
+export function DonutChart({attributes, initialXAttribute, data}) {
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   const xValue = (d) => d[xAttribute];
-  const data_mapped_value = dataPreparation(xValue);
-
-  const dataHeart = useData();
-  if (!dataHeart) {
+  const data_mapped_value = dataPreparation(xValue, data);
+  if (!data) {
     return <pre>Loading...</pre>;
   }
-  const dataColumn = dataHeart.map(xValue);
+  const dataColumn = data.map(xValue);
 
-  d3.select("#my_dataviz")
-    .select("svg")
-    .remove();
+  d3.select("#my_dataviz").select("svg").remove();
   var pie = d3
     .pie()
     .sort(null)
-    .value(function(d) {
+    .value(function (d) {
       return d.value;
     });
   const data_mapped = pie(data_mapped_value);
@@ -74,10 +57,7 @@ export function DonutChart() {
     .domain(dataColumn)
     .range(["red", "#52429b", "#1ac6ff", "#ffcc00"]);
 
-  var tooltip = d3
-    .select("#my_dataviz")
-    .append("div")
-    .attr("class", "tooltip");
+  var tooltip = d3.select("#my_dataviz").append("div").attr("class", "tooltip");
 
   svg
     .selectAll(".svg-canvas")
@@ -85,7 +65,7 @@ export function DonutChart() {
     .enter()
     .append("path")
     .attr("d", arc)
-    .attr("fill", function(d) {
+    .attr("fill", function (d) {
       return color(d.data.key);
     })
     .attr("class", "donutChart")
@@ -110,7 +90,7 @@ export function DonutChart() {
     .enter()
     .append("polyline")
     .attr("class", "donutChartPolyline")
-    .attr("points", function(d) {
+    .attr("points", function (d) {
       var posA = arc.centroid(d);
       var posB = outerArc.centroid(d);
       var posC = outerArc.centroid(d);
@@ -125,16 +105,16 @@ export function DonutChart() {
     .enter()
     .append("text")
     .attr("class", "donutChartLabel")
-    .text(function(d) {
+    .text(function (d) {
       return d.data.key;
     })
-    .attr("transform", function(d) {
+    .attr("transform", function (d) {
       var pos = outerArc.centroid(d);
       var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
       pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
       return "translate(" + pos + ")";
     })
-    .style("text-anchor", function(d) {
+    .style("text-anchor", function (d) {
       var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
       return midangle < Math.PI ? "start" : "end";
     });

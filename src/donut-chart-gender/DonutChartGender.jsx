@@ -8,18 +8,7 @@ import "../dropdownButton.css";
 import {DataSetInfo} from "../DataSetInfo";
 import {Card} from "../Card";
 
-const attributes = [
-  {value: "cp", label: "cp"},
-  {value: "fbs", label: "fbs"},
-  {value: "restecg", label: "restecg"},
-  {value: "exng", label: "exng"},
-  {value: "slp", label: "slp"},
-  {value: "caa", label: "caa"},
-  {value: "thall", label: "thall"},
-  {value: "output", label: "output"},
-];
-export function DonutChartGender() {
-  const initialXAttribute = "cp";
+export function DonutChartGender({attributes, initialXAttribute, data}) {
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   return (
     <Card isGender={true}>
@@ -45,8 +34,8 @@ export function DonutChartGender() {
         </Box>
       </Box>
       <Box sx={{display: "flex"}}>
-        <DonutChartFemale xAttribute={xAttribute} />
-        <DonutChartMale xAttribute={xAttribute} />
+        <DonutChartFemale xAttribute={xAttribute} data={data} />
+        <DonutChartMale xAttribute={xAttribute} data={data} />
       </Box>
     </Card>
   );

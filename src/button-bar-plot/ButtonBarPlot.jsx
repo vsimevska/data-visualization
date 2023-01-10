@@ -1,7 +1,6 @@
 import * as d3 from "d3";
-import {useData} from "./useData";
 import React, {useState} from "react";
-import {dataPreparation} from "./dataPreparation";
+import {dataPreparation} from "../dataPreparation";
 import {Box} from "theme-ui";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -14,25 +13,10 @@ const margin = {top: 30, right: 30, bottom: 70, left: 60};
 const width = 460 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
-const attributes = [
-  {value: "sex", label: "sex"},
-  {value: "cp", label: "cp"},
-  {value: "fbs", label: "fbs"},
-  {value: "restecg", label: "restecg"},
-  {value: "exng", label: "exng"},
-  {value: "slp", label: "slp"},
-  {value: "caa", label: "caa"},
-  {value: "thall", label: "thall"},
-  {value: "output", label: "output"},
-];
-
-export function ButtonBarPlot() {
-  const data = useData();
-
-  const initialXAttribute = "sex";
+export function ButtonBarPlot({attributes, initialXAttribute, data}) {
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   const xValue = (d) => d[xAttribute];
-  const data_mapped_sex = dataPreparation(xValue);
+  const data_mapped_sex = dataPreparation(xValue, data);
   if (!data) {
     return <pre>Loading...</pre>;
   }
@@ -59,13 +43,6 @@ export function ButtonBarPlot() {
     .attr("transform", "translate(0," + height + ")")
     .attr("class", "myXaxis");
 
-  svg
-    .append("text")
-    .attr("class", "textBarPlot")
-    .attr("x", width / 2)
-    .attr("y", height + margin.top + 15)
-    .text(xAttribute);
-
   var y = d3.scaleLinear().range([height, 0]);
   var yAxis = svg.append("g").attr("class", "myYaxis");
 
@@ -77,7 +54,11 @@ export function ButtonBarPlot() {
         return d.key;
       })
     );
-    xAxis.call(d3.axisBottom(x));
+    xAxis
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
 
     y.domain([
       0,
@@ -99,7 +80,7 @@ export function ButtonBarPlot() {
       .merge(u)
       .transition()
       .duration(1000)
-      .attr("rx", 15)
+      .attr("rx", 8)
       .attr("x", function(d) {
         return x(d.key);
       })

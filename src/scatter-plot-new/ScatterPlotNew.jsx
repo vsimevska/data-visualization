@@ -12,25 +12,18 @@ var margin = {top: 10, right: 85, bottom: 55, left: 60};
 var width = 550 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
-const attributes = [
-  {value: "age", label: "age"},
-  {value: "trtbps", label: "trtbps"},
-  {value: "chol", label: "chol"},
-  {value: "thalachh", label: "thalachh"},
-  {value: "oldpeak", label: "oldpeak"},
-];
-
-export function ScatterPlotNew() {
- 
-  const initialXAttribute = "age";
+export function ScatterPlotNew({
+  attributes,
+  initialXAttribute,
+  initialYAttribute,
+  data,
+}) {
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   const xValue = (d) => d[xAttribute];
 
-  const initialYAttribute = "chol";
   const [yAttribute, setYAttribute] = useState(initialYAttribute);
   const yValue = (d) => d[yAttribute];
-  
-  const data = useData();
+
   if (!data) {
     return <pre>Loading...</pre>;
   }

@@ -8,16 +8,14 @@ export function Card({children, title, isGender}) {
         backgroundColor: "#130e41",
         display: "flex",
         flexDirection: "column",
+        justifyContent:'center',
+        alignItems:'center',
         borderRadius: "20px",
         padding: "40px",
         boxShadow:  '0 0 50px 1px #400080'
       }}
     >
-      {/* <Card.CardTitle>{title}</Card.CardTitle> */}
       {children}
     </Box>
   );
 }
-// Card.CardTitle = function CardTitle({children}) {
-//   return <Box sx={{display: "flex", gap: 5}}>{children}</Box>;
-// };

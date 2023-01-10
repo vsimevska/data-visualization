@@ -7,7 +7,6 @@ export const useData = () => {
   useEffect(() => {
     const row = (d) => {
       d.age = +d.age;
-      d.sex = +d.sex;
       d.cp = +d.cp;
       d.trtbps = +d.trtbps;
       d.chol = +d.chol;
