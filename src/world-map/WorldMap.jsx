@@ -2,7 +2,6 @@ import React from "react";
 import * as d3 from "d3";
 import {useDataCountries} from "./useDataCountries";
 import {useNavigate} from "react-router-dom";
-import "../donut-chart/styleDonutChart.css";
 
 const width = 800;
 const height = 800;
@@ -28,7 +27,7 @@ export function WorldMap() {
 
   var tooltip = d3
     .select("#world_map")
-    .append("g")
+    .append("div")
     .attr("class", "tooltip");
 
   const projection = d3
@@ -40,6 +39,11 @@ export function WorldMap() {
     let tooltip = document.getElementById("tooltip");
     tooltip.innerHTML = text;
     tooltip.style.display = "block";
+    tooltip.style.color = "white";
+    tooltip.style.fontSize = "20px";
+    tooltip.style.padding = "10px";
+    tooltip.style.backgroundColor = "#130e41";
+    tooltip.style.opacity = 1;
     tooltip.style.left = evt.pageX + 10 + "px";
     tooltip.style.top = evt.pageY + 10 + "px";
   }

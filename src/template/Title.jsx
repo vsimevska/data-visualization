@@ -3,7 +3,6 @@ import {MdArrowBack} from "react-icons/md";
 import React from "react";
 
 export function Title({title, link, onClick, buttonText}) {
- 
   return (
     <Box
       sx={{

@@ -1,5 +1,3 @@
-import * as d3 from "d3";
-import {useData} from "./useData";
 import {Box} from "theme-ui";
 import React, {useState} from "react";
 import Dropdown from "react-dropdown";
@@ -7,10 +5,9 @@ import "react-dropdown/style.css";
 import "../dropdownButton.css";
 import {DataSetInfo} from "../DataSetInfo";
 import {Card} from "../Card";
+import {ScatterChart, Scatter, XAxis, YAxis, Tooltip, Cell} from "recharts";
 
-var margin = {top: 10, right: 85, bottom: 55, left: 60};
-var width = 550 - margin.left - margin.right;
-var height = 400 - margin.top - margin.bottom;
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
 export function ScatterPlotNew({
   attributes,
@@ -27,95 +24,6 @@ export function ScatterPlotNew({
   if (!data) {
     return <pre>Loading...</pre>;
   }
-
-  d3.select("#scatter_new")
-    .select("svg")
-    .remove();
-
-  var svg = d3
-    .select("#scatter_new")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var x = d3
-    .scaleLinear()
-    .domain(d3.extent(data, xValue))
-    .range([0, width])
-    .nice();
-
-  svg
-    .append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .attr("color", "white")
-    .call(d3.axisBottom(x));
-  svg.append("text");
-
-  svg
-    .append("text")
-    .attr("text-anchor", "end")
-    .style("fill", "white")
-    .style("font-family", "Oswald")
-    .attr("x", width / 2)
-    .attr("y", height + margin.top + 30)
-    .text(xAttribute);
-
-  svg
-    .append("text")
-    .style("fill", "white")
-    .attr("text-anchor", "end")
-    .attr("transform", "rotate(-90)")
-    .style("font-family", "Oswald")
-    .attr("y", -margin.left + 20)
-    .attr("x", -margin.top - height / 2 + 20)
-    .text(yAttribute);
-
-  var y = d3
-    .scaleLinear()
-    .domain(d3.extent(data, yValue))
-    .range([height, 0])
-    .nice();
-  svg
-    .append("g")
-    .call(d3.axisLeft(y))
-    .attr("color", "white");
-
-  svg
-    .append("g")
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("cx", function(d) {
-      return x(d[xAttribute]);
-    })
-    .attr("cy", function(d) {
-      return y(d[yAttribute]);
-    })
-    .attr("r", 4)
-    .style("fill", "#52429b")
-
-    .on("mouseover", function(event, d) {
-      var xPosition = parseFloat(d3.select(this).attr("cx"));
-      var yPosition = parseFloat(d3.select(this).attr("cy"));
-
-      svg
-        .append("text")
-        .attr("id", "tooltip")
-        .attr("x", xPosition)
-        .attr("y", yPosition)
-        .style("pointer-events", "none")
-        .style("fill", "white")
-        .style("opacity", 1)
-
-        .text("value is " + d[xAttribute]);
-    })
-    .on("mouseout", function() {
-      d3.select("#tooltip").remove();
-    });
-
   return (
     <Card>
       <Box sx={{display: "flex", gap: 2, marginBottom: "30px"}}>
@@ -154,7 +62,44 @@ export function ScatterPlotNew({
           <DataSetInfo xAttribute={yAttribute} />
         </Box>
       </Box>{" "}
-      <Box id="scatter_new"></Box>
+      <ScatterChart
+        width={600}
+        height={500}
+        margin={{
+          top: 20,
+          right: 20,
+          bottom: 20,
+          left: 20,
+        }}
+      >
+        <XAxis
+          type="number"
+          dataKey={xValue}
+          label={{value: xAttribute, position: "bottom", fill: "white"}}
+          allowDataOverflow={false}
+          tick={{fill: "white"}}
+          name={xAttribute}
+        />
+        <YAxis
+          type="number"
+          dataKey={yValue}
+          allowDataOverflow={false}
+          label={{
+            value: yAttribute,
+            position: "left",
+            angle: -90,
+            fill: "white",
+          }}
+          tick={{fill: "white"}}
+          name={yAttribute}
+        />
+        <Tooltip cursor={{strokeDasharray: "3 3"}} />
+        <Scatter data={data} fill="white">
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Scatter>
+      </ScatterChart>
     </Card>
   );
 }

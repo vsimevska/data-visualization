@@ -1,7 +1,5 @@
 import React from "react";
 import {Box, Grid} from "theme-ui";
-import {useNavigate} from "react-router-dom";
-import {Title} from "./Title.jsx";
 
 export function Template({
   title,

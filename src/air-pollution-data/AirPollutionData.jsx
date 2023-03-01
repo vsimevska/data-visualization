@@ -1,5 +1,4 @@
 import React from "react";
-import {Template} from "../template/Template";
 import {WorldMap} from "../world-map/WorldMap";
 import {Box, Paragraph} from "theme-ui";
 import {Title} from "../template/Title";

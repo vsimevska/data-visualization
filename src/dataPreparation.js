@@ -7,12 +7,13 @@ export function dataPreparation(dataValue, data) {
   }
   const data_ready = {};
   const dataColumn = data.map(dataValue);
-  dataColumn.forEach(function (x) {
+  dataColumn.forEach(function(x) {
     data_ready[x] = (data_ready[x] || 0) + 1;
   });
   const data_mapped = Object.entries(data_ready).map(([key, value]) => ({
     key,
     value,
   }));
+
   return data_mapped;
 }

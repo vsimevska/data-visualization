@@ -4,14 +4,13 @@ import heart2 from "../heart2.png";
 import creditCardIcon from "../credit-card-icon.png";
 import airPollution from "../air-pollution.png";
 import {useNavigate} from "react-router-dom";
-import data_cover from "../data_cover.gif";
 import {keyframes} from "@emotion/react";
 
 function Category({image, title, onClick}) {
   return (
     <Box
       sx={{
-        backgroundColor:'white',
+        backgroundColor: "white",
         borderRadius: "20px",
         height: "150px",
         width: "150px",
@@ -77,8 +76,6 @@ export function HomePage() {
         height: "100vh",
         flexDirection: "column",
         gap: 3,
-        // backgroundImage: `url('https://i.pinimg.com/originals/62/c3/f6/62c3f6eba45836514e4a9c19ba4ae260.gif')`,
-        // backgroundSize: "cover",
       }}
     >
       <Heading

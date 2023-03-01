@@ -33,7 +33,7 @@ export function DonutChartGender({attributes, initialXAttribute, data}) {
           />
         </Box>
       </Box>
-      <Box sx={{display: "flex"}}>
+      <Box sx={{display: "flex", justifyContent: "space-between"}}>
         <DonutChartFemale xAttribute={xAttribute} data={data} />
         <DonutChartMale xAttribute={xAttribute} data={data} />
       </Box>

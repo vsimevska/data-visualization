@@ -1,11 +1,9 @@
-import {useData} from "../donut-chart/useData";
 import React from "react";
 
 export function dataPreparationMale(dataValue, data) {
   if (!data) {
     return <pre>Loading...</pre>;
   }
-  const zeroSex = {};
   const oneSex = {};
 
   var count_one_zero = 0;

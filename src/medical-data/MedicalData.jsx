@@ -22,6 +22,17 @@ const attributes = [
   {value: "output", label: "output"},
 ];
 
+const attributesGender = [
+  {value: "cp", label: "cp"},
+  {value: "fbs", label: "fbs"},
+  {value: "restecg", label: "restecg"},
+  {value: "exng", label: "exng"},
+  {value: "slp", label: "slp"},
+  {value: "caa", label: "caa"},
+  {value: "thall", label: "thall"},
+  {value: "output", label: "output"},
+];
+
 const attributesScatterPlot = [
   {value: "age", label: "age"},
   {value: "trtbps", label: "trtbps"},
@@ -57,7 +68,7 @@ export function MedicalData() {
         }
         DonutChartGender={
           <DonutChartGender
-            attributes={attributes}
+            attributes={attributesGender}
             initialXAttribute={initialXAttribute}
             data={data}
           />

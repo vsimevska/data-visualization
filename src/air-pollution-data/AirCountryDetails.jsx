@@ -10,6 +10,7 @@ import {DonutChart} from "../donut-chart/DonutChart";
 import {ScatterPlotNew} from "../scatter-plot-new/ScatterPlotNew";
 import {Title} from "../template/Title";
 import {useNavigate} from "react-router-dom";
+import {AirCityDetails} from "./AirCityDetails";
 
 const attributes = [
   {value: "AQI Category", label: "AQI Category"},
@@ -39,10 +40,6 @@ export function AirCountryDetails() {
 
   const navigate = useNavigate();
   let {country} = useParams();
-
-  const dataCountry = data.map((d) => {
-    return d.Country;
-  });
 
   const chosenCountry = data.filter((d) => {
     if (country === "USA" && d.Country === "United States of America") {
@@ -96,24 +93,30 @@ export function AirCountryDetails() {
           className="myClassName"
         />
       </Box>
-      <Grid columns={[2]} sx={{height: "100%", marginBottom: "30px"}}>
-        <ButtonBarPlot
-          attributes={attributes}
-          initialXAttribute={initialXAttribute}
-          data={city !== "City" ? chosenCity : chosenCountry}
-        />
-        <DonutChart
-          attributes={attributes}
-          initialXAttribute={initialXAttribute}
-          data={city !== "City" ? chosenCity : chosenCountry}
-        />
-      </Grid>
-      <ScatterPlotNew
-        attributes={attributesScatterPlot}
-        initialXAttribute={initialXAttributeScatterPlot}
-        initialYAttribute={initialYAttribute}
-        data={city !== "City" ? chosenCity : chosenCountry}
-      />{" "}
+      {city !== "City" ? (
+        <AirCityDetails data={chosenCity} />
+      ) : (
+        <>
+          <Grid columns={[2]} sx={{height: "100%", marginBottom: "30px"}}>
+            <ButtonBarPlot
+              attributes={attributes}
+              initialXAttribute={initialXAttribute}
+              data={chosenCountry}
+            />
+            <DonutChart
+              attributes={attributes}
+              initialXAttribute={initialXAttribute}
+              data={chosenCountry}
+            />
+          </Grid>
+          <ScatterPlotNew
+            attributes={attributesScatterPlot}
+            initialXAttribute={initialXAttributeScatterPlot}
+            initialYAttribute={initialYAttribute}
+            data={chosenCountry}
+          />
+        </>
+      )}
     </Box>
   );
 }

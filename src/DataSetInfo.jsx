@@ -4,7 +4,7 @@ import React from "react";
 function Legend({heading, value1}) {
   return (
     <Box sx={{display: "flex", flexDirection: "column", gap: 3}}>
-      <Heading sx={{fontSize: "30px"}}>{heading}</Heading>
+      <Heading sx={{fontSize: "20px"}}>{heading}</Heading>
 
       {value1 && (
         <Box
@@ -16,7 +16,7 @@ function Legend({heading, value1}) {
           }}
         >
           {value1.map((value) => (
-            <Paragraph sx={{fontSize: "20px"}}>{value}</Paragraph>
+            <Paragraph sx={{fontSize: "15px"}}>{value}</Paragraph>
           ))}
         </Box>
       )}
@@ -146,7 +146,6 @@ export function DataSetInfo({xAttribute}) {
       {xAttribute === "Gender" && (
         <Legend heading={"Gender"} value1={["0 - Female", " 1 - Male"]} />
       )}
-      
     </Box>
   );
 }
